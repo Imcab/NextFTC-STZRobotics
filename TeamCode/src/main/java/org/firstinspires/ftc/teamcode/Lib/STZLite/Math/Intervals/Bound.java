@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Intervals;
+package org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Intervals;
 
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry.Pose;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry.Translation;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Pose;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Translation;
 
 /**
  * The {@code Bound2D} class defines an axis-aligned rectangle in the XY plane,

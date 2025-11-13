@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Utils;
+package org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Utils;
 
 import java.util.function.DoubleSupplier;
 

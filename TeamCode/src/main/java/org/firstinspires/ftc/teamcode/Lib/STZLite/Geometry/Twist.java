@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry;
+package org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry;
 
 /**
  * A change in distance along a 2D arc since the last pose update. We can use ideas from

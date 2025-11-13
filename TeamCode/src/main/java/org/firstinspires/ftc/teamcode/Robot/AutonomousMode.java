@@ -4,9 +4,9 @@ import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry.Pose;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry.Rotation;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Utils.Units;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Pose;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Rotation;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Utils.Units;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Drive.SuperChassis;
 
 import dev.nextftc.core.commands.Command;

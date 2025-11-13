@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.Lib.AtomLite.Hardware.Drive;
+package org.firstinspires.ftc.teamcode.Lib.STZLite.Hardware.Drive;
 
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry.Pose;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry.Rotation;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry.Translation;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry.Twist;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Pose;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Rotation;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Translation;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Twist;
 
 public class DriveSpeeds {
     /** Velocity along the x-axis. (Fwd is +) */

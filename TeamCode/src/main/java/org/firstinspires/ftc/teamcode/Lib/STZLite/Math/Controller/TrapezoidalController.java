@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Controller;
+package org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Controller;
 
 
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Controller.Gains.ProfileGains;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Controller.Helpers.Output;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Controller.Helpers.TrapezoidProfile;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Utils.MathUtil;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Controller.Gains.ProfileGains;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Controller.Helpers.Output;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Controller.Helpers.TrapezoidProfile;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Utils.MathUtil;
 
 /**
  * Implements a PID control loop whose setpoint is constrained by a trapezoid profile.

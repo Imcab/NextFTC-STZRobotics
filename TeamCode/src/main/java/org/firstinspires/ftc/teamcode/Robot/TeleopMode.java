@@ -19,8 +19,6 @@ public class TeleopMode extends NextFTCOpMode {
     private final Button b;
     private final Button options;
 
-
-
     public TeleopMode(){
         addComponents(chassis.asCOMPONENT());
 

@@ -9,9 +9,9 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Drive.Chassis;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry.Pose;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry.Rotation;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Drive.Chassis;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Pose;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Rotation;
 
 import dev.nextftc.core.components.SubsystemComponent;
 import dev.nextftc.core.subsystems.Subsystem;

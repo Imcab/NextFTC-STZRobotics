@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Utils;
+package org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Utils;
 
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry.Translation;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Translation;
 
 /** Math utility functions. */
 public final class MathUtil {

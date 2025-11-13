@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Controller.Helpers;
+package org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Controller.Helpers;
 
 @FunctionalInterface
 public interface Output{

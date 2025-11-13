@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Controller;
+package org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Controller;
 
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Controller.Gains.ProfileGains;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Controller.Helpers.Output;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Controller.Gains.ProfileGains;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Controller.Helpers.Output;
 
 public class GravityFeedForward {
     private  ProfileGains.GravityFeedForwardGains gains;

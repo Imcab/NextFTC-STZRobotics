@@ -2,11 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Controller;
+package org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Controller;
 
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Controller.Gains.ProfileGains;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Controller.Helpers.Output;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Utils.MathUtil;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Controller.Gains.ProfileGains;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Controller.Helpers.Output;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Utils.MathUtil;
 
 /** Implements a PID control loop. (Versión standalone) */
 public class PIDController {

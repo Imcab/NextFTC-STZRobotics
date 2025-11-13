@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Utils;
+package org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Utils;
 
 /**
  * The {@code Epsilon} class provides utility methods to compare floating-point numbers

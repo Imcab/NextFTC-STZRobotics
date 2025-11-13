@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Intervals;
+package org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Intervals;
 
 /**
  * Represents a range of values

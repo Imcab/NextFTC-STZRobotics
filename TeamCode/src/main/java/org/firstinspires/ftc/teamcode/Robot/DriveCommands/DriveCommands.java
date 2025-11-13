@@ -4,8 +4,8 @@ import static dev.nextftc.extensions.pedro.PedroComponent.follower;
 
 import com.pedropathing.paths.Path;
 
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry.Rotation;
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Utils.Units;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Rotation;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Utils.Units;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Drive.SuperChassis;
 
 import java.util.function.DoubleSupplier;

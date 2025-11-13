@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.Lib.AtomLite.Geometry;
+package org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry;
 
-import org.firstinspires.ftc.teamcode.Lib.AtomLite.Math.Utils.Units;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Utils.Units;
 
 import dev.nextftc.core.units.Angle;
 
