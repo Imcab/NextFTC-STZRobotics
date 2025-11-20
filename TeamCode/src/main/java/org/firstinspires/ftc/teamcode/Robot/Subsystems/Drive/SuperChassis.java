@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Robot.Subsystems.Drive;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
+import com.bylazar.gamepad.GamepadManager;
 import com.pedropathing.follower.Follower;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
@@ -12,15 +13,20 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.Lib.STZLite.Drive.Chassis;
 import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Pose;
 import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Rotation;
+import org.firstinspires.ftc.teamcode.Robot.DriveCommands.DriveCommands;
 
+import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.components.SubsystemComponent;
 import dev.nextftc.core.subsystems.Subsystem;
 import dev.nextftc.core.units.Angle;
 import dev.nextftc.extensions.pedro.PedroComponent;
 import dev.nextftc.ftc.ActiveOpMode;
+import dev.nextftc.ftc.GamepadEx;
 
 import static dev.nextftc.extensions.pedro.PedroComponent.follower;
 import static dev.nextftc.extensions.pedro.PedroComponent.gyro;
+
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +36,6 @@ public class SuperChassis implements Subsystem {
 
     public static final SuperChassis INSTANCE = new SuperChassis();
 
-    private Chassis mecanum;
     private Limelight3A limelight;
 
     private  double tx;
@@ -46,13 +51,18 @@ public class SuperChassis implements Subsystem {
     @Override
     public void initialize() {
         HardwareMap map = ActiveOpMode.hardwareMap();
-        mecanum = new Chassis();
-        new PedroComponent(ChassisConstants::buildPedroPathing);
         limelight = map.get(Limelight3A.class, VisionConstants.limelightName);
         limelight.setPollRateHz(100);
         limelight.start();
         follower().setStartingPose(Pose.kZero.toPedroPose());
     }
+
+    @NonNull
+    @Override
+    public Command getDefaultCommand() {
+        return DriveCommands.runWithJoysticks(this, );
+    }
+
 
     @Override
     public void periodic(){
@@ -177,7 +187,7 @@ public class SuperChassis implements Subsystem {
     }
 
     public void stop(){
-        mecanum.stop();
+        Chassis.INSTANCE.stop();
     }
 
 

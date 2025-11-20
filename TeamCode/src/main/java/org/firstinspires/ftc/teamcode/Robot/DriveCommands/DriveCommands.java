@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Utils.Units;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Drive.SuperChassis;
 
 import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
 
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.commands.utility.InstantCommand;
@@ -20,7 +21,7 @@ import dev.nextftc.extensions.pedro.TurnTo;
 
 public class DriveCommands {
 
-    public static Command runWithJoysticks(SuperChassis chasis, DoubleSupplier forward, DoubleSupplier strafe, DoubleSupplier turn, boolean robotCentric){
+    public static Command runWithJoysticks(SuperChassis chasis, Supplier<Float> forward, Supplier<Float> strafe, Supplier<Float> turn, boolean robotCentric){
         return new LambdaCommand().
                 named("RunWithJoysticks").
                 requires(chasis).
@@ -28,9 +29,9 @@ public class DriveCommands {
                 setUpdate(
                         ()-> {
 
-                            double fw = forward.getAsDouble();
-                            double st = strafe.getAsDouble();
-                            double tr = turn.getAsDouble();
+                            float fw = forward.get();
+                            float st = strafe.get();
+                            float tr = turn.get();
 
                             follower().setTeleOpDrive(fw, st, tr, robotCentric);
                         }

@@ -10,6 +10,12 @@ public class REV312010 {
     private final DigitalChannel redLED;
     private final DigitalChannel greenLED;
 
+    public enum LEDState{
+        kGREEN, kRED, kAMBER, kOFF
+    }
+
+    private LEDState currentState;
+
     public REV312010(){
         HardwareMap map = ActiveOpMode.hardwareMap();
         redLED = map.get(DigitalChannel.class, "red");
@@ -17,26 +23,39 @@ public class REV312010 {
 
         redLED.setMode(DigitalChannel.Mode.OUTPUT);
         greenLED.setMode(DigitalChannel.Mode.OUTPUT);
+
+        this.currentState = LEDState.kOFF;
     }
 
-    public void setGreen(){
-        greenLED.setState(true);
-        redLED.setState(false);
+    public void set(LEDState state){
+        switch(state){
+            case kGREEN:
+                this.currentState = LEDState.kGREEN;
+                setState(true,false);
+                break;
+            case kRED:
+                this.currentState = LEDState.kRED;
+                setState(false,true);
+                break;
+            case kAMBER:
+                this.currentState = LEDState.kAMBER;
+                setState(true,true);
+                break;
+            default:
+                this.currentState = LEDState.kOFF;
+                setState(false,false);
+                break;
+        }
     }
 
-    public void setRed(){
-        greenLED.setState(false);
-        redLED.setState(true);
+    public LEDState get(){
+        return this.currentState;
     }
 
-    public void setAmber(){
-        greenLED.setState(true);
-        redLED.setState(true);
+    private void setState(boolean green, boolean red){
+        greenLED.setState(green);
+        redLED.setState(red);
     }
 
-    public void setOff(){
-        greenLED.setState(false);
-        redLED.setState(false);
-    }
 }
 

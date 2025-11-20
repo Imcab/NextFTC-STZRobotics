@@ -33,6 +33,5 @@ dependencies {
     implementation 'dev.nextftc.extensions:pedro:1.0.0'
     implementation "com.bylazar:ftcontrol:0.6.8"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'org.psilynx.psikit:core:0.1.0'
-    implementation 'org.psilynx.psikit:ftc:0.1.0'
+
 }
