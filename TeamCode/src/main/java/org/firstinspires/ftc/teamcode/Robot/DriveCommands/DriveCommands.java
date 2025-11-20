@@ -44,6 +44,23 @@ public class DriveCommands {
                 setInterruptible(true);
     }
 
+    public static Command platilla(){
+        return  new LambdaCommand().
+                named("").
+                requires(null).
+                setStart(()-> {
+
+                }).
+                setUpdate(()-> {
+
+                }).
+                setStop(interrupted-> {
+
+                }).
+                setIsDone(()-> false).setInterruptible(true).
+                setInterruptible(false);
+    }
+
     public static Command resetHeading(SuperChassis chassis){
         return new InstantCommand("Reset Heading", chassis::resetHeading);
     }

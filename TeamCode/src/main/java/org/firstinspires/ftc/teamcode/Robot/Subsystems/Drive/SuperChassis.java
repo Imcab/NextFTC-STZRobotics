@@ -47,7 +47,6 @@ public class SuperChassis implements Subsystem {
     public void initialize() {
         HardwareMap map = ActiveOpMode.hardwareMap();
         mecanum = new Chassis();
-        mecanum.initialize();
         new PedroComponent(ChassisConstants::buildPedroPathing);
         limelight = map.get(Limelight3A.class, VisionConstants.limelightName);
         limelight.setPollRateHz(100);
