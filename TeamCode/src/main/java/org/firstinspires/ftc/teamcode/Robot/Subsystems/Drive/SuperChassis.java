@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Rotation;
 import org.firstinspires.ftc.teamcode.Robot.DriveCommands.DriveCommands;
 
 import dev.nextftc.core.commands.Command;
+import dev.nextftc.core.commands.utility.NullCommand;
 import dev.nextftc.core.components.SubsystemComponent;
 import dev.nextftc.core.subsystems.Subsystem;
 import dev.nextftc.core.units.Angle;
@@ -48,6 +49,8 @@ public class SuperChassis implements Subsystem {
 
     private final Pose robotPose = new Pose();
 
+    private Command defaultCommand = new NullCommand();
+
     @Override
     public void initialize() {
         HardwareMap map = ActiveOpMode.hardwareMap();
@@ -60,9 +63,12 @@ public class SuperChassis implements Subsystem {
     @NonNull
     @Override
     public Command getDefaultCommand() {
-        return DriveCommands.runWithJoysticks(this, );
+        return defaultCommand;
     }
 
+    public void setDefaultCommand(Command command){
+        this.defaultCommand = command;
+    }
 
     @Override
     public void periodic(){

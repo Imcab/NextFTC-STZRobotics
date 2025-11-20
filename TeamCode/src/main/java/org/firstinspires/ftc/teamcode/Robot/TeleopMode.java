@@ -27,6 +27,8 @@ public class TeleopMode extends NextFTCOpMode {
     public TeleopMode(){
         addComponents(new PedroComponent(ChassisConstants::buildPedroPathing),chassis.asCOMPONENT());
 
+        chassis.setDefaultCommand(DriveCommands.runWithJoysticks(chassis, ()-> gamepad1.left_stick_y, ()-> gamepad1.right_stick_x, ()-> gamepad1.left_stick_x, false));
+
         this.a = button(() -> gamepad1.a);
         this.b = button(() -> gamepad1.b);
         this.options = button(() -> gamepad1.options);
