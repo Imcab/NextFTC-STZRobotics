@@ -51,13 +51,31 @@ public class SuperChassis implements Subsystem {
 
     private Command defaultCommand = new NullCommand();
 
+    public boolean isPedroReady = false;
+
     @Override
     public void initialize() {
         HardwareMap map = ActiveOpMode.hardwareMap();
         limelight = map.get(Limelight3A.class, VisionConstants.limelightName);
         limelight.setPollRateHz(100);
         limelight.start();
-        follower().setStartingPose(Pose.kZero.toPedroPose());
+    }
+
+    // SuperChassis.java
+
+    public void setPedroReady() {
+        // 1. Establecer el flag como true
+        this.isPedroReady = true;
+
+        // 2. Proteger el acceso al follower, por si acaso el subsistema se inicializa antes
+        //    de que el componente de Pedro esté listo.
+        try {
+            follower().setStartingPose(Pose.kZero.toPedroPose());
+        } catch (IllegalStateException e) {
+            // En un escenario normal de NextFTC, esto ya debería funcionar,
+            // pero lo mantenemos en un try-catch para evitar el crasheo total.
+            telemetry.addData("ERROR PEDRO", "No se pudo establecer la pose inicial.");
+        }
     }
 
     @NonNull
@@ -73,7 +91,7 @@ public class SuperChassis implements Subsystem {
     @Override
     public void periodic(){
 
-        if(limelight.isConnected()){
+        if(limelight.isConnected() && isPedroReady){
 
             limelight.updateRobotOrientation(getAngle().inRad);
             LLResult result = limelight.getLatestResult();
@@ -167,7 +185,12 @@ public class SuperChassis implements Subsystem {
     }
 
     public Angle getAngle(){
-        return gyro().get();
+
+        if (isPedroReady) {
+            return gyro().get();
+        }
+        // Si no está listo, devuelve 0.
+        return Angle.fromDeg(0);
     }
 
     public double getLLTx(){
@@ -186,10 +209,17 @@ public class SuperChassis implements Subsystem {
         limelight.pipelineSwitch(pipe);
     }
 
+    // SuperChassis.java
+
     public void resetHeading(){
-        com.pedropathing.geometry.Pose pedroPose = follower().poseTracker.getPose();
-        Pose reset = new Pose(pedroPose.getX(), pedroPose.getY(), Rotation.kZero);
-        follower().poseTracker.setPose(reset.toPedroPose());
+        if (isPedroReady) { // <-- ¡Protección necesaria!
+            com.pedropathing.geometry.Pose pedroPose = follower().poseTracker.getPose();
+            Pose reset = new Pose(pedroPose.getX(), pedroPose.getY(), Rotation.kZero);
+            follower().poseTracker.setPose(reset.toPedroPose());
+        } else {
+            // Manejar el caso: quizás registrar que el reset se omitió
+            telemetry.addData("RESET HEADING", "Error: Pedro no está listo.");
+        }
     }
 
     public void stop(){

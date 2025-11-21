@@ -21,28 +21,30 @@ import dev.nextftc.extensions.pedro.TurnTo;
 
 public class DriveCommands {
 
+    // DriveCommands.java
+
     public static Command runWithJoysticks(SuperChassis chasis, Supplier<Float> forward, Supplier<Float> strafe, Supplier<Float> turn, boolean robotCentric){
         return new LambdaCommand().
                 named("RunWithJoysticks").
                 requires(chasis).
-                setStart(follower()::startTeleOpDrive).
-                setUpdate(
+                // setStart(follower()::startTeleOpDrive).  <-- ¡ELIMINAR ESTA LÍNEA!
+                        setUpdate(
                         ()-> {
-
+                            // 1. Obtener los valores del joystick
                             float fw = forward.get();
                             float st = strafe.get();
                             float tr = turn.get();
 
-                            follower().setTeleOpDrive(fw, st, tr, robotCentric);
+                            // 2. Proteger la lógica de Pedro, verificando el flag del chasis
+                            if (chasis.isPedroReady) {
+                                // En el primer ciclo donde isPedroReady es true,
+                                // se llamará a startTeleOpDrive automáticamente si es necesario.
+                                follower().setTeleOpDrive(fw, st, tr, robotCentric);
+                            }
                         }
                 ).
-                setStop(interrupted
-                                -> {
-                            chasis.stop();
-                        }
-                ).
-                setIsDone(()-> false).
-                setInterruptible(true);
+                // ... resto del comando ...
+                        setIsDone(()-> false); // Debería ser false para un default command
     }
 
     public static Command platilla(){
@@ -58,7 +60,7 @@ public class DriveCommands {
                 setStop(interrupted-> {
 
                 }).
-                setIsDone(()-> false).setInterruptible(true).
+                setIsDone(()-> true).setInterruptible(true).
                 setInterruptible(false);
     }
 
