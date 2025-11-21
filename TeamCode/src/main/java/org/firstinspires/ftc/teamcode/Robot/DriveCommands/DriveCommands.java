@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Utils.Units;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Drive.SuperChassis;
 
 import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
 
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.commands.utility.InstantCommand;
@@ -18,50 +17,32 @@ import dev.nextftc.core.units.Angle;
 import dev.nextftc.extensions.pedro.FollowPath;
 import dev.nextftc.extensions.pedro.TurnBy;
 import dev.nextftc.extensions.pedro.TurnTo;
+import dev.nextftc.ftc.ActiveOpMode;
 
 public class DriveCommands {
 
-    // DriveCommands.java
-
-    public static Command runWithJoysticks(SuperChassis chasis, Supplier<Float> forward, Supplier<Float> strafe, Supplier<Float> turn, boolean robotCentric){
+    public static Command runWithJoysticks(SuperChassis chasis, DoubleSupplier forward, DoubleSupplier strafe, DoubleSupplier turn, boolean robotCentric){
         return new LambdaCommand().
                 named("RunWithJoysticks").
                 requires(chasis).
-                // setStart(follower()::startTeleOpDrive).  <-- ¡ELIMINAR ESTA LÍNEA!
-                        setUpdate(
+                setStart(follower()::startTeleOpDrive).
+                setUpdate(
                         ()-> {
-                            // 1. Obtener los valores del joystick
-                            float fw = forward.get();
-                            float st = strafe.get();
-                            float tr = turn.get();
 
-                            // 2. Proteger la lógica de Pedro, verificando el flag del chasis
-                            if (chasis.isPedroReady) {
-                                // En el primer ciclo donde isPedroReady es true,
-                                // se llamará a startTeleOpDrive automáticamente si es necesario.
-                                follower().setTeleOpDrive(fw, st, tr, robotCentric);
-                            }
+                            double fw = forward.getAsDouble();
+                            double st = strafe.getAsDouble();
+                            double tr = turn.getAsDouble();
+
+                            follower().setTeleOpDrive(fw, st, tr, robotCentric);
                         }
                 ).
-                // ... resto del comando ...
-                        setIsDone(()-> false); // Debería ser false para un default command
-    }
-
-    public static Command platilla(){
-        return  new LambdaCommand().
-                named("").
-                requires(null).
-                setStart(()-> {
-
-                }).
-                setUpdate(()-> {
-
-                }).
-                setStop(interrupted-> {
-
-                }).
-                setIsDone(()-> true).setInterruptible(true).
-                setInterruptible(false);
+                setStop(interrupted
+                                -> {
+                            chasis.stop();
+                        }
+                ).
+                setIsDone(()-> false).
+                setInterruptible(true);
     }
 
     public static Command resetHeading(SuperChassis chassis){
@@ -116,6 +97,39 @@ public class DriveCommands {
 
     public static Command TurnBy(SuperChassis chassis, Rotation rotRads){
         return TurnBy(chassis, rotRads.toAngle());
+    }
+
+    public static Command AlignByAprilTag(SuperChassis chassis){
+
+        return new LambdaCommand().
+                named("AlignByAprilTag").
+                requires(chassis).
+                setStart(()-> {
+
+                    if(chassis.isLLConnected() && chassis.getLIMELIGHT().getLatestResult().isValid()){
+                        double heading = chassis.getFOLLOWER().getPose().getHeading();
+                        double tx = Math.toRadians(chassis.getLLTx());
+
+                        // Nota: Revisa si necesitas restar o sumar dependiendo de tu configuración
+                        double target = heading - tx;
+
+                        // 2. Le damos la orden al Follower
+                        follower().turnTo(target);
+
+                    }
+                }).
+                setUpdate(
+                        ()-> {}
+                ).
+                setStop(interrupted -> {
+                    // Opcional: Si se interrumpe manualmente, frenar.
+                    if(interrupted) chassis.stop();
+                }).
+                setIsDone(()-> {
+
+                    return !follower().isBusy();
+                }).
+                setInterruptible(true);
     }
 
 }

@@ -17,4 +17,14 @@ public class IntakeCommands {
                 setIsDone(()-> false).
                 setInterruptible(true);
     }
+
+    public static Command stopIntake(Intake intake) {
+        return new LambdaCommand()
+                .named("stopIntake")
+                .requires(intake) // This forces 'runIntake' to cancel
+                .setStart(() -> intake.MoveIn(0))
+                .setUpdate(() -> intake.MoveIn(0))
+                .setIsDone(() -> false) // Finishes immediately
+                .setInterruptible(true);
+    }
 }

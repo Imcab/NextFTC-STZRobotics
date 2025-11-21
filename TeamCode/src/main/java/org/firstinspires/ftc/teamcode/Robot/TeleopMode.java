@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
 import static dev.nextftc.bindings.Bindings.button;
-import static dev.nextftc.extensions.pedro.PedroComponent.follower;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Lib.STZLite.Geometry.Pose;
 import org.firstinspires.ftc.teamcode.Robot.DriveCommands.DriveCommands;
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.Components.Intake.Intake;
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.Components.Intake.IntakeCommands;
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.Components.Shooter.ShooterCommands;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Drive.ChassisConstants;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Drive.SuperChassis;
 
@@ -16,51 +17,69 @@ import dev.nextftc.control.ControlSystem;
 import dev.nextftc.core.components.Component;
 import dev.nextftc.extensions.pedro.PedroComponent;
 import dev.nextftc.ftc.NextFTCOpMode;
-import kotlin.time.TimeSource;
 
-@TeleOp(name = "Weilai Teleop")
+@TeleOp(name = "Weilai Teleop Final")
 public class TeleopMode extends NextFTCOpMode {
-
     private final SuperChassis chassis = SuperChassis.INSTANCE;
+    private final Intake intake = Intake.INSTANCE;
+    private final org.firstinspires.ftc.teamcode.Robot.Subsystems.Shooter.Shooter shooter = org.firstinspires.ftc.teamcode.Robot.Subsystems.Shooter.Shooter.INSTANCE;
 
-    private final Button a;
-    private final Button b;
-    private final Button options;
 
-    Component pedro = new PedroComponent(ChassisConstants::buildPedroPathing);
+    private  Button a;
+    private  Button b;
+    private Button right_bumper;
+    private Button x;
+    private  Button options;
 
-    public TeleopMode(){
-        addComponents(pedro);
+    public TeleopMode() {
+        addComponents(new PedroComponent(ChassisConstants::buildPedroPathing));
         addComponents(chassis.asCOMPONENT());
-
-        this.a = button(() -> gamepad1.a);
-        this.b = button(() -> gamepad1.b);
-        this.options = button(() -> gamepad1.options);
-
-        ControlSystem a = ControlSystem.builder().build();
+        addComponents(intake.asCOMPONENT());
+        addComponents(shooter.asCOMPONENT());
 
     }
 
     @Override
     public void onInit() {
-        chassis.setPedroReady();
+
+        this.a = button(() -> gamepad1.a);
+        this.b = button(() -> gamepad1.b);
+        //this.x = button(() -> gamepad1.x);
+        this.right_bumper = button(() -> gamepad1.right_bumper);
+
+        this.options = button(() -> gamepad1.options);
+
+        options.whenBecomesTrue(DriveCommands.resetHeading(chassis));
+
+
+        a.whenBecomesTrue(IntakeCommands.runIntake(intake, 0.8));
+        a.whenBecomesFalse(IntakeCommands.stopIntake(intake));
+
+        b.whenBecomesTrue(IntakeCommands.runIntake(intake, -0.8));
+        b.whenBecomesFalse(IntakeCommands.stopIntake(intake));
+
+        //x.whenBecomesTrue(ShooterCommands.runShooter(shooter, 0.8));
+
+        right_bumper.whenBecomesTrue(ShooterCommands.runShooterPID(shooter, 1500));
+        right_bumper.whenBecomesFalse(ShooterCommands.stopShooter(shooter));
+
+        shooter.setDefaultCommand(
+                ShooterCommands.runManualShooter(shooter,
+                        () -> gamepad1.right_trigger));
+
+
+        // 4. Drive Command (This part is correct)
         chassis.setDefaultCommand(
-                DriveCommands.runWithJoysticks(
-                        chassis, ()-> gamepad1.left_stick_y,
-                        ()-> gamepad1.right_stick_x,
-                        ()-> gamepad1.left_stick_x,
+                DriveCommands.runWithJoysticks(chassis,
+                        () -> -gamepad1.left_stick_y,
+                        () -> -gamepad1.left_stick_x,
+                        () -> -gamepad1.right_stick_x,
                         false));
-
-        options.whenTrue(DriveCommands.resetHeading(chassis));
-
-
     }
-
     @Override
-    public void onStartButtonPressed() {
-
-    }
-
+    public void onWaitForStart() {}
+    @Override
+    public void onStartButtonPressed() {}
     @Override
     public void onUpdate() {
         BindingManager.update();
@@ -69,6 +88,4 @@ public class TeleopMode extends NextFTCOpMode {
     public void onStop() {
         BindingManager.reset();
     }
-
-
 }

@@ -1,19 +1,26 @@
-package org.firstinspires.ftc.teamcode.Robot.Subsystems.Components.Shooter;
+package org.firstinspires.ftc.teamcode.Robot.Subsystems.Shooter;
+import androidx.annotation.NonNull;
 
-import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Controller.VelocityProfileController;
-import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Intervals.Interval;
-
+import dev.nextftc.core.commands.Command;
+import dev.nextftc.core.commands.utility.NullCommand;
+import dev.nextftc.core.components.SubsystemComponent;
 import dev.nextftc.core.subsystems.Subsystem;
 import dev.nextftc.hardware.impl.MotorEx;
 
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Controller.VelocityProfileController;
+import org.firstinspires.ftc.teamcode.Lib.STZLite.Math.Intervals.Interval;
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.Components.Shooter.ShooterConstants;
+
 public class Shooter implements Subsystem {
+    public static final Shooter INSTANCE = new Shooter();
 
     private VelocityProfileController controller;
-    private MotorEx shooter1;
-    private MotorEx shooter2;
+    MotorEx Sh1;
+    MotorEx Sh2;
 
     private boolean hasTarget = false;
     private boolean open = false;
+    private Command defaultCommand = new NullCommand();
 
     @Override
     public void initialize() {
@@ -22,14 +29,24 @@ public class Shooter implements Subsystem {
                 ShooterConstants.kS,
                 ShooterConstants.kV);
 
-        this.shooter1 = new MotorEx(ShooterConstants.motorName1);
-        this.shooter2 = new MotorEx(ShooterConstants.motorName2);
+        this.Sh1 = new MotorEx(ShooterConstants.shootername1);
+        this.Sh2 = new MotorEx(ShooterConstants.shootername2);
 
-        shooter1.floatMode();
-        shooter2.floatMode();
+        Sh1.floatMode();
+        Sh2.floatMode();
+    }
+    @NonNull
+    @Override
+    public Command getDefaultCommand() {
+        return defaultCommand;
+    }
+    public void setDefaultCommand(Command command){
+        this.defaultCommand = command;
     }
 
+
     @Override
+
     public void periodic() {
 
         if(hasTarget && !open){
@@ -39,7 +56,7 @@ public class Shooter implements Subsystem {
     }
 
     public double getVelocity(){
-        return (shooter1.getVelocity() + shooter2.getVelocity()) / 2.0;
+        return (Sh1.getVelocity() + Sh2.getVelocity()) / 2.0;
     }
 
     public void toVelocity(double velocity){
@@ -49,8 +66,8 @@ public class Shooter implements Subsystem {
     }
 
     private void setPower(double power) {
-        shooter1.setPower(power);
-        shooter2.setPower(power);
+        Sh1.setPower(power);
+        Sh2.setPower(power);
     }
 
     public void set(double power) {
@@ -77,5 +94,6 @@ public class Shooter implements Subsystem {
 
         return Interval.isInRange(getVelocity(), minLimit, maxLimit);
     }
+    public SubsystemComponent asCOMPONENT(){return new SubsystemComponent(INSTANCE);}
 
 }
